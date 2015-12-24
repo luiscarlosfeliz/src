@@ -119,9 +119,9 @@ private final Lock _mutex = new ReentrantLock(true);
                 {
                     if (modbus.read(j)==0)  // se os caminhos estiverem todos ocupados o programa fica À espera
                        break ; 
-                    
+                   dfgfadsfas 
                 }*/
-                
+                safdasdfsadfsadf
              int nigga =  ext.escolha_caminho(p1,p2); 
              
                 
