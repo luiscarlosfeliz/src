@@ -121,8 +121,10 @@ private final Lock _mutex = new ReentrantLock(true);
                        break ; 
                    dfgfadsfas 
                 }*/
-                GITHUB
-             int nigga =  ext.escolha_caminho(p1,p2); 
+               
+               
+ 
+               int nigga =  ext.escolha_caminho(p1,p2); 
              
                 
              while(nigga==0)
@@ -407,7 +409,7 @@ private final Lock _mutex = new ReentrantLock(true);
                  
              }
              
-             
+            
              while(modbus.read(9)==0)
              {
                  
