@@ -70,7 +70,9 @@ private final Lock _mutex = new ReentrantLock(true);
          
    //  System.out.println("ANTES : aUX : "+aux+" TAMANHO : "+UDPserver.vector.size());
          
-       while (aux==0)  {
+       while (aux==0)  
+       
+       {
               try {
                  Thread.sleep(2000);
              } catch (InterruptedException ex) {  
@@ -96,7 +98,7 @@ private final Lock _mutex = new ReentrantLock(true);
              
              }
             
-         if ( operacao.equals("T") && (modbus.read(9)) == 0 && (modbus.read(80)==0) )   //variavel OCUPADO do isagraf  = 0 
+         if ( operacao.equals("T") && (modbus.read(9)) == 0 && (modbus.read(81)==0) )   //variavel OCUPADO do isagraf  = 0 
          {   
              
           
@@ -167,7 +169,7 @@ private final Lock _mutex = new ReentrantLock(true);
                 
                while ((modbus.read(9))!=1)  //enquanto nao receber a peça, o programa fica preso
                 {
-               System.out.println("aguar dachega de peça");
+               System.out.println("aguarda chegada de peça");
                     try {
                  Thread.sleep(500);
              } catch (InterruptedException ex) {  
@@ -220,7 +222,7 @@ private final Lock _mutex = new ReentrantLock(true);
              while((modbus.read(24) == 1 && modbus.read(25)== 1) ==true ||( modbus.read(24)==1))  //2 caminhos dos pushers ocupados
                  
              {   
-                 System.out.println("Sem dinspobilidade nos pushers -  Aguarde ou remova uma peça");
+                 System.out.println("Sem disponibilidade nos pushers -  Aguarde ou remova uma peça");
                  for (int i=15; i<=16;i++)
                  {exp.caminho_livre(i);}
 
@@ -239,9 +241,30 @@ private final Lock _mutex = new ReentrantLock(true);
            //  modbus.write(1,Integer.parseInt(PeçaOrigem));
              //modbus.write(2,Integer.parseInt(PeçaFinal)); //que neste caso reperesenta o destino da peça, ou é 1 ou 2
              
+            
+                                  
+                          
              if (Integer.parseInt(PeçaFinal) == 1)
-        {
+                         {
+            
+              
+              int c= 0;
+              while(modbus.read(40)==0)
+              {
+                  
+                  try {
+                 Thread.sleep(800);
+             } catch (InterruptedException ex) {  
+                 Logger.getLogger(thread.class.getName()).log(Level.SEVERE, null, ex);
+             }
+                  c++;                  
+                  
+                  if (c>15)
+                      break;
+              }
                  
+                  
+                  
              while(modbus.read(40)==1 )  // pm1
                  
              {
@@ -259,14 +282,31 @@ private final Lock _mutex = new ReentrantLock(true);
              
          }
              else if (Integer.parseInt(PeçaFinal) == 2)
+                 
              {
+                 int c= 0;
+                 
+              while(modbus.read(41)==0)
+              {
+                  
+                  try {
+                 Thread.sleep(800);
+             } catch (InterruptedException ex) {  
+                 Logger.getLogger(thread.class.getName()).log(Level.SEVERE, null, ex);
+             }
+                  c++;                  
+                  
+                  if (c>15)
+                      break;
+              }
+              
                  while(modbus.read(41)==1 )  //pm2
                  
              {
                 System.out.println("ROLLER 2 CHEIO - RETIRE UMA PEÇA");
                   
                 try {
-                 Thread.sleep(1000);
+                 Thread.sleep(800);
              } catch (InterruptedException ex) {
                  Logger.getLogger(thread.class.getName()).log(Level.SEVERE, null, ex);
              }
@@ -274,6 +314,13 @@ private final Lock _mutex = new ReentrantLock(true);
                  modbus.write(5,15);
                  
          }
+             
+             
+             
+             
+            
+             
+             
              
              modbus.write(1,0);
              modbus.write(1,Integer.parseInt(PeçaOrigem));
@@ -379,7 +426,7 @@ private final Lock _mutex = new ReentrantLock(true);
              if (modbus.read(22) == 0 && modbus.read(80)==0) // POR ISTO A VERIFICAR TBM O SENSOR
              {
                               modbus.write(1,0); 
- System.out.println("Primeira PEÇA");
+                System.out.println("Primeira PEÇA");
                  modbus.write(5,12);
                  modbus.write(1,Integer.parseInt(PeçaOrigem));
              modbus.write(2,Integer.parseInt(PeçaFinal));
@@ -446,8 +493,14 @@ private final Lock _mutex = new ReentrantLock(true);
               if (modbus.read(80) == 0)
              {
                  
+                 while(modbus.read(82)==1)
+                 {
+                     System.out.println("CT2 ocupado");
+                 }
+                 
                  System.out.println("SEGUNDA PEÇA");
                               modbus.write(1,0); 
+                              
 
                  modbus.write(5,13);
                 // modbus.write(1,Integer.parseInt(PeçaOrigem));
@@ -480,20 +533,51 @@ private final Lock _mutex = new ReentrantLock(true);
                  
              }
              
-             
+             int cont_tempo =0;
               while(modbus.read(9)==0)
              {
-                 
+                 cont_tempo++;
               System.out.println("Aguarda chegada de peça");
+              
          try {
                  Thread.sleep(500);
              } catch (InterruptedException ex) {  
                  Logger.getLogger(thread.class.getName()).log(Level.SEVERE, null, ex);
                
                }
+         
+         if (cont_tempo >15) //a peça nao quer sair, tenta tirar outra vez
+                   
+         {
+                        modbus.write(1,0);
+                        try {
+                 Thread.sleep(100);
+             } catch (InterruptedException ex) {
+                 Logger.getLogger(thread.class.getName()).log(Level.SEVERE, null, ex);
+             }
+                        
+                         modbus.write(1,Integer.parseInt(PeçaFinal));
+                         
+                        while ((modbus.read(9))!=1)
+                        {  System.out.println(" A peça não quis sair, Vai ser feita uma nova tenativa");
+                        
+                           try {
+                        Thread.sleep(1000);
+                         } catch (InterruptedException ex) {
+                         Logger.getLogger(thread.class.getName()).log(Level.SEVERE, null, ex);
+                          }
+                               ///////////////////espera pela peça
+                        }
+                        
+                    }
+               
+                
+                
+               
              }
               
-              modbus.write(5,0);
+              
+             modbus.write(5,0);
              
               while(modbus.read(80) == 1)
                {    //falling edge
@@ -509,6 +593,8 @@ private final Lock _mutex = new ReentrantLock(true);
                }
                }
               
+          
+               
              
                 modbus.write(1,0); 
          }

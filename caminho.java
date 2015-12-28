@@ -18,7 +18,7 @@ public class caminho {
         switch (a) {
             
            
-                        case 1:     if( modbus.read(70) == 0 && modbus.read(80) == 0 ) //verificação de caminho 1 livre:vê se celula1 está livre (70) e o caminho até lá também está livre (50 e 51)
+                        case 1:     if( modbus.read(70) == 0 && modbus.read(81) == 0 ) //verificação de caminho 1 livre:vê se celula1 está livre (70) e o caminho até lá também está livre (50 e 51)
                                     {
                                         modbus.write(11,0);
 
@@ -32,7 +32,7 @@ public class caminho {
                                     }
                         break;
                                      
-                        case 2:     if (modbus.read(70) == 0 && modbus.read(80) == 0 )//mesma verificação só que para caminho 2
+                        case 2:     if (modbus.read(70) == 0 && modbus.read(81) == 0 )//mesma verificação só que para caminho 2
                                     {
                                         modbus.write(12,0);
                                        // return TRUE;
@@ -44,7 +44,7 @@ public class caminho {
                                     }
                         break;
 
-                        case 3:   if (modbus.read(71)== 0 && modbus.read(80) == 0 )
+                        case 3:   if (modbus.read(71)== 0 && modbus.read(81) == 0 )
                                     {
                                         modbus.write(13,0);
                                         
@@ -57,7 +57,7 @@ public class caminho {
                                         }
 
                                          break;
-                        case 4:   if (modbus.read(71)== 0 && modbus.read(80) == 0 )
+                        case 4:   if (modbus.read(71)== 0 && modbus.read(81) == 0 )
                                     {
                                         modbus.write(14,0);
                                         
@@ -69,7 +69,7 @@ public class caminho {
                                       //      return TRUE;
                                         }         
                                              break;
-                        case 5:   if (modbus.read(72)== 0 &&  modbus.read(80) == 0 )
+                        case 5:   if (modbus.read(72)== 0 &&  modbus.read(81) == 0 )
                                     {
                                         modbus.write(15,0);
                                         
@@ -82,7 +82,7 @@ public class caminho {
                                         }             
                      break;
         
-                        case 6:   if (modbus.read(72)== 0 && modbus.read(80) == 0 )
+                        case 6:   if (modbus.read(72)== 0 && modbus.read(81) == 0 )
                                     {
                                         modbus.write(16,0);
                                         
@@ -94,7 +94,7 @@ public class caminho {
                                        //     return TRUE;
                                         }
                                          break;
-                        case 7:   if (modbus.read(73)== 0 && modbus.read(80) == 0 )
+                        case 7:   if (modbus.read(73)== 0 && modbus.read(81) == 0 )
                                     {
                                         modbus.write(17,0);
                                         
@@ -106,7 +106,7 @@ public class caminho {
                                       //      return TRUE;
                                         }
                                     break;
-                        case 8:   if (modbus.read(73)== 0 && modbus.read(80) == 0 )
+                        case 8:   if (modbus.read(73)== 0 && modbus.read(81) == 0 )
                                     {
                                         modbus.write(18,0);
                                         
@@ -118,7 +118,7 @@ public class caminho {
                                   //          return TRUE;
                                         }
                                        break;
-                        case 9:   if (modbus.read(71)== 0 && modbus.read(80) == 0 )
+                        case 9:   if (modbus.read(71)== 0 && modbus.read(81) == 0 )
                                     {
                                         modbus.write(19,0);
                                         
@@ -130,7 +130,7 @@ public class caminho {
                                        //     return TRUE;
                                         }    
                                              break;
-                        case 10:   if (modbus.read(72)== 0 && modbus.read(80) == 0 )
+                        case 10:   if (modbus.read(72)== 0 && modbus.read(81) == 0 )
                                     {
                                         modbus.write(20,0);
                                         
@@ -142,7 +142,7 @@ public class caminho {
                                      //       return TRUE;
                                         }
                                          break;
-                        case 11:   if (modbus.read(73)== 0 && modbus.read(80) == 0 )
+                        case 11:   if (modbus.read(73)== 0 && modbus.read(81) == 0 )
                                     {
                                         modbus.write(21,0);
                                         
